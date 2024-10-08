@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sightseeing Locations</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <h1>Travel To Georgia - Sightseeing Locations</h1>
+    <div class="controls">
+        <div class="season-toggle">
+            <a th:href="@{/locations?season=summer}" class="season-btn">Summer</a>
+            <a th:href="@{/locations?season=winter}" class="season-btn">Winter</a>
+        </div>
+        <div class="search-bar">
+            <form th:action="@{/locations}" method="get">
+                <input type="search" id="search" name="name" placeholder="Search for locations..." th:value="${name}"/>
+                <button type="submit">Search</button>
+                <a th:href="@{/locations}" class="reset-link">Reset</a>
+            </form>
+        </div>
+    </div>
+</header>
+<section class="locations">
+    <div class="location-list">
+        <div class="location-item" th:each="location : ${locations}">
+            <a th:href="@{/locations/{locationId}(locationId=${location.id})}" class="location-link">
+                <div class="location-content">
+                    <img th:src="${location.imageUrl}" alt="Location Image"/>
+                    <h2 th:text="${location.name}">Location Name</h2>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

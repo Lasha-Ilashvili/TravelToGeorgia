@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Location Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<header>
+    <h1 th:text="${location.name}">Location Name</h1>
+</header>
+
+<section class="location-details">
+    <div class="details-wrapper">
+        <div class="content-center">
+            <img th:src="${location.imageUrl}" alt="Location Image" class="location-img"/>
+            <p th:text="${location.description}">Detailed description of the location goes here...</p>
+            <span class="label" th:text="${location.season}">Season Label</span>
+            <span class="label" th:text="${location.type}">Type Label</span>
+        </div>
+    </div>
+</section>
+</body>
+</html>
