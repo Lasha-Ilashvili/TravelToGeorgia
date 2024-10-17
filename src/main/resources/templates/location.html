@@ -1,23 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Location Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${location.name} + ' - Travel To Georgia'">Location Details</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-    <h1 th:text="${location.name}">Location Name</h1>
+<body class="bg-gray-100">
+<header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-3xl font-bold" th:text="${location.name}">Location Name</h1>
+        <a href="/locations"
+           class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                      clip-rule="evenodd"/>
+            </svg>
+            Back to Locations
+        </a>
+    </div>
 </header>
 
-<section class="location-details">
-    <div class="details-wrapper">
-        <div class="content-center">
-            <img th:src="${location.imageUrl}" alt="Location Image" class="location-img"/>
-            <p th:text="${location.description}">Detailed description of the location goes here...</p>
-            <span class="label" th:text="${location.season}">Season Label</span>
-            <span class="label" th:text="${location.type}">Type Label</span>
+<main class="container mx-auto mt-8">
+    <div class="bg-location-similar rounded-lg shadow-md overflow-hidden">
+        <img th:src="${location.imageUrl}" alt="Location Image" class="w-full h-96 object-cover">
+        <div class="p-6">
+            <p class="text-gray-700 text-lg mb-4" th:text="${location.description}">Description of the location</p>
+            <div class="flex space-x-2">
+                <span th:text="${location.season}"
+                      class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Season</span>
+                <span th:text="${location.region}"
+                      class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Region</span>
+            </div>
         </div>
     </div>
-</section>
+
+    <section class="mt-12">
+        <h2 class="text-2xl font-bold mb-4">Similar Locations by Season</h2>
+        <div class="overflow-x-auto whitespace-nowrap pb-4">
+            <div class="inline-flex space-x-6">
+                <div th:each="similar : ${similarBySeason}"
+                     class="bg-location-similar rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 w-64 flex-shrink-0">
+                    <a th:href="@{/locations/{id}(id=${similar.id})}">
+                        <img th:src="${similar.imageUrl}" alt="Similar Location Image" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 th:text="${similar.name}" class="text-lg font-semibold mb-2">Similar Location Name</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-12">
+        <h2 class="text-2xl font-bold mb-4">Similar Locations by Region</h2>
+        <div class="overflow-x-auto whitespace-nowrap pb-4">
+            <div class="inline-flex space-x-6">
+                <div th:each="similar : ${similarByRegion}"
+                     class="bg-location-similar rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 w-64 flex-shrink-0">
+                    <a th:href="@{/locations/{id}(id=${similar.id})}">
+                        <img th:src="${similar.imageUrl}" alt="Similar Location Image" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 th:text="${similar.name}" class="text-lg font-semibold mb-2">Similar Location Name</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-gray-800 text-white py-4 mt-12">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2024 Travel To Georgia. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

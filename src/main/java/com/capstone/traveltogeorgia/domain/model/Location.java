@@ -1,25 +1,26 @@
-package com.capstone.traveltogeorgia.data;
+package com.capstone.traveltogeorgia.domain.model;
 
 import java.util.Objects;
 
 public class Location {
+
     private Long id;
     private String name;
     private String description;
     private String imageUrl;
     private Season season;
-    private Type type;
+    private Region region;
 
     public Location() {
     }
 
-    public Location(Long id, String name, String description, String imageUrl, Season season, Type type) {
+    public Location(Long id, String name, String description, String imageUrl, Season season, Region region) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
         this.season = season;
-        this.type = type;
+        this.region = region;
     }
 
     public Long getId() {
@@ -62,30 +63,32 @@ public class Location {
         this.season = season;
     }
 
-    public Type getType() {
-        return type;
+    public Region getRegion() {
+        return region;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return Objects.equals(id, location.id)
-                && Objects.equals(name, location.name)
-                && Objects.equals(description, location.description)
-                && Objects.equals(imageUrl, location.imageUrl)
-                && season == location.season
-                && type == location.type;
+
+        Location Location = (Location) o;
+
+        return Objects.equals(id, Location.id)
+                && Objects.equals(name, Location.name)
+                && Objects.equals(description, Location.description)
+                && Objects.equals(imageUrl, Location.imageUrl)
+                && season == Location.season
+                && region == Location.region;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, imageUrl, season, type);
+        return Objects.hash(id, name, description, imageUrl, season, region);
     }
 
     @Override
@@ -96,7 +99,7 @@ public class Location {
                 ", description='" + description + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", season=" + season +
-                ", type=" + type +
+                ", region='" + region + '\'' +
                 '}';
     }
 }

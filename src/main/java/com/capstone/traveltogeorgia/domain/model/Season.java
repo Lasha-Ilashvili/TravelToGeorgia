@@ -1,9 +1,9 @@
-package com.capstone.traveltogeorgia.data;
+package com.capstone.traveltogeorgia.domain.model;
 
 public enum Season {
     SUMMER("Summer"),
     WINTER("Winter"),
-    WINTER_SUMMER(WINTER.displayName + "/" + WINTER.displayName);
+    WINTER_SUMMER(WINTER + "/" + SUMMER);
 
     private final String displayName;
 
@@ -11,7 +11,8 @@ public enum Season {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
+    @Override
+    public String toString() {
         return displayName;
     }
 }
