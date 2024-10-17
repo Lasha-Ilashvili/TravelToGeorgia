@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 1rem;
 }
@@ -52,7 +52,10 @@ form button[type="submit"]:hover {
     padding: 2rem 0;
 }
 
-.bg-white {
+.bg-white, .bg-location, .bg-location-similar {
+    max-width: 800px;
+    max-height: 800px;
+    margin: 0 auto;
     background-color: white;
     border-radius: 0.5rem;
     overflow: hidden;
@@ -60,7 +63,7 @@ form button[type="submit"]:hover {
     transition: transform 0.3s ease;
 }
 
-.bg-white:hover {
+.bg-white:hover, .bg-location-similar:hover {
     transform: translateY(-5px);
 }
 
@@ -72,7 +75,12 @@ form button[type="submit"]:hover {
 
 .bg-location img {
     width: 100%;
-    height: 350px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.bg-location img.h-64 {
+    height: 25rem;
 }
 
 .bg-location-similar {
@@ -95,6 +103,14 @@ form button[type="submit"]:hover {
 .bg-green-100 {
     background-color: #dcfce7;
     color: #166534;
+}
+
+.bg-location .p-6 {
+    padding: 1.5rem;  /* Adjust padding inside the location content */
+}
+
+.bg-location-similar .p-4 {
+    padding: 1rem;  /* Adjust padding inside the similar locations boxes */
 }
 
 @media (max-width: 768px) {

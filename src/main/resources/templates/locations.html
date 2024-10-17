@@ -6,7 +6,6 @@
     <title>Travel To Georgia - Sightseeing Locations</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100">
 <header class="bg-blue-600 text-white p-4 sticky top-0 z-10">
@@ -26,44 +25,43 @@
                 </form>
             </div>
             <div class="flex space-x-2">
-                <div x-data="{ open: false, seasons: ['Summer', 'Winter'] }" class="relative">
-                    <button @click="open = !open"
-                            class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="relative">
+                    <button onclick="toggleDropdown('seasonDropdown')"
+                            class="dropdown-toggle bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         Filter by Season
                     </button>
-                    <div x-show="open" @click.away="open = false"
-                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
-                        <template x-for="season in seasons">
-                            <a :href="'/locations/by_season/' + season.toLowerCase()" x-text="season"
-                               class="block px-4 py-2 text-gray-800 hover:bg-blue-100"></a>
-                        </template>
+                    <div id="seasonDropdown"
+                         class="dropdown-content hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+                        <a th:each="season : ${allSeasons}"
+                           th:href="@{/locations/by_season/{season}(season=${season})}"
+                           th:text="${season}"
+                           class="block px-4 py-2 text-gray-800 hover:bg-blue-100"></a>
                     </div>
                 </div>
-                <div x-data="{ open: false, regions: [] }"
-                     x-init="fetch('/locations/api/regions').then(response => response.json()).then(data => regions = data)"
-                     class="relative">
-                    <button @click="open = !open"
-                            class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <div class="relative">
+                    <button onclick="toggleDropdown('regionDropdown')"
+                            class="dropdown-toggle bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
                         Filter by Region
                     </button>
-                    <div x-show="open" @click.away="open = false"
-                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
-                        <template x-for="region in regions">
-                            <a :href="'/locations/by_region/' + region.toLowerCase()" x-text="region"
-                               class="block px-4 py-2 text-gray-800 hover:bg-blue-100"></a>
-                        </template>
+                    <div id="regionDropdown"
+                         class="dropdown-content hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+                        <a th:each="region : ${allRegions}"
+                           th:href="@{/locations/by_region/{region}(region=${region})}"
+                           th:text="${region}"
+                           class="block px-4 py-2 text-gray-800 hover:bg-blue-100"></a>
                     </div>
                 </div>
                 <a th:href="@{/locations}"
                    class="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">Reset</a>
             </div>
         </div>
+    </div>
 </header>
 
 <main class="container mx-auto mt-8">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div th:each="location : ${locations}"
-             class="bg-locations rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105">
+             class="bg-locations  rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105">
             <a th:href="@{/locations/{locationId}(locationId=${location.id})}" class="block">
                 <img th:src="${location.imageUrl}" alt="Location Image" class="w-full h-48 object-cover">
                 <div class="p-4">
@@ -81,10 +79,38 @@
         </div>
     </div>
 </main>
+
 <footer class="bg-gray-800 text-white py-4 mt-12">
     <div class="container mx-auto text-center">
-        <p>&copy; 2024 Travel To Georgia. All rights reserved.</p>
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> Travel To Georgia. All rights reserved.
+        </p>
     </div>
 </footer>
+
+<script th:inline="javascript">
+    function toggleDropdown(id) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.id !== id && !openDropdown.classList.contains('hidden')) {
+                openDropdown.classList.add('hidden');
+            }
+        }
+        const dropdown = document.getElementById(id);
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropdown-toggle')) {
+            const dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (!openDropdown.classList.contains('hidden')) {
+                    openDropdown.classList.add('hidden');
+                }
+            }
+        }
+    }
+</script>
 </body>
 </html>

@@ -2,13 +2,17 @@ package com.capstone.traveltogeorgia.domain.controller;
 
 
 import com.capstone.traveltogeorgia.data.service.LocationsService;
+import com.capstone.traveltogeorgia.domain.model.Location;
 import com.capstone.traveltogeorgia.domain.model.Region;
 import com.capstone.traveltogeorgia.domain.model.Season;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/locations")
@@ -23,30 +27,29 @@ public class LocationsController {
     @GetMapping
     public String getAllLocations(Model model) {
         model.addAttribute("locations", locationsService.getAllLocations());
-        model.addAttribute("regions", locationsService.getAllRegions());
-
+        addCommonAttributes(model);
         return "locations";
     }
 
     @GetMapping("/{locationId}")
     public String getLocationById(@PathVariable long locationId, Model model) {
-        model.addAttribute("location", locationsService.getLocationById(locationId));
-
+        Location location = locationsService.getLocationById(locationId);
+        model.addAttribute("location", location);
         model.addAttribute("similarBySeason", locationsService.getLocationsBySeason(
-                locationsService.getLocationById(locationId).getSeason(), locationId
+                location.getSeason(), locationId
         ));
         model.addAttribute("similarByRegion", locationsService.getLocationsByRegion(
-                locationsService.getLocationById(locationId).getRegion(), locationId
+                location.getRegion(), locationId
         ));
-
+        addCommonAttributes(model);
         return "location";
     }
 
     @GetMapping("/by_search_param")
     public String getLocationByName(@RequestParam String param, Model model) {
         if (param != null && param.isBlank()) return "redirect:/locations";
-
         model.addAttribute("locations", locationsService.getLocationsByName(param));
+        addCommonAttributes(model);
         return "locations";
     }
 
@@ -55,6 +58,7 @@ public class LocationsController {
         model.addAttribute("locations", locationsService.getLocationsBySeason(
                 getEnum(Season.class, season), -1L)
         );
+        addCommonAttributes(model);
         return "locations";
     }
 
@@ -62,24 +66,25 @@ public class LocationsController {
     public String getLocationsByRegion(@PathVariable String region, Model model) {
         model.addAttribute("locations", locationsService.getLocationsByRegion(
                 getEnum(Region.class, region), -1L));
-        model.addAttribute("regions", locationsService.getAllRegions());
+        addCommonAttributes(model);
         return "locations";
     }
 
-    @GetMapping("/api/regions")
-    @ResponseBody
-    public List<String> getAllRegions() {
-        List<String> regions = locationsService.getAllRegions().stream().map(Region::toString).toList();
-        return regions;
+    @GetMapping("/regions")
+    public String getRegions(Model model) {
+        addCommonAttributes(model);
+        return "locations";
+    }
+
+    private void addCommonAttributes(Model model) {
+        model.addAttribute("allRegions", locationsService.getAllRegions());
+        model.addAttribute("allSeasons", Arrays.copyOf(Season.values(), Season.values().length - 1));
     }
 
     private static <T extends Enum<T>> T getEnum(Class<T> enumClass, String name) {
-//        return Enum.valueOf(enumClass, name.toUpperCase());
-
-        for(T e : enumClass.getEnumConstants()) {
+        for (T e : enumClass.getEnumConstants()) {
             if (e.toString().toUpperCase().contains(name.toUpperCase())) return e;
         }
-
         return null;
     }
 }

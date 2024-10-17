@@ -11,7 +11,7 @@
 <header class="bg-blue-600 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-3xl font-bold" th:text="${location.name}">Location Name</h1>
-        <a href="/locations"
+        <a th:href="@{/locations}"
            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -24,27 +24,28 @@
 </header>
 
 <main class="container mx-auto mt-8">
-    <div class="bg-location-similar rounded-lg shadow-md overflow-hidden">
-        <img th:src="${location.imageUrl}" alt="Location Image" class="w-full h-96 object-cover">
+    <div class="bg-location rounded-lg shadow-md overflow-hidden">
+        <img th:src="${location.imageUrl}" th:alt="${location.name + ' Image'}" class="w-full h-64 object-cover">
         <div class="p-6">
             <p class="text-gray-700 text-lg mb-4" th:text="${location.description}">Description of the location</p>
             <div class="flex space-x-2">
-                <span th:text="${location.season}"
-                      class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">Season</span>
+            <span th:text="${location.season}"
+                  th:class="${'inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold'}">Season</span>
                 <span th:text="${location.region}"
-                      class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">Region</span>
+                      th:class="${'inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold'}">Region</span>
             </div>
         </div>
     </div>
 
-    <section class="mt-12">
+    <section class="mt-12" th:if="${!#lists.isEmpty(similarBySeason)}">
         <h2 class="text-2xl font-bold mb-4">Similar Locations by Season</h2>
         <div class="overflow-x-auto whitespace-nowrap pb-4">
             <div class="inline-flex space-x-6">
                 <div th:each="similar : ${similarBySeason}"
                      class="bg-location-similar rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 w-64 flex-shrink-0">
                     <a th:href="@{/locations/{id}(id=${similar.id})}">
-                        <img th:src="${similar.imageUrl}" alt="Similar Location Image" class="w-full h-48 object-cover">
+                        <img th:src="${similar.imageUrl}" th:alt="${similar.name + ' Image'}"
+                             class="w-full h-48 object-cover">
                         <div class="p-4">
                             <h3 th:text="${similar.name}" class="text-lg font-semibold mb-2">Similar Location Name</h3>
                         </div>
@@ -54,14 +55,15 @@
         </div>
     </section>
 
-    <section class="mt-12">
+    <section class="mt-12" th:if="${!#lists.isEmpty(similarByRegion)}">
         <h2 class="text-2xl font-bold mb-4">Similar Locations by Region</h2>
         <div class="overflow-x-auto whitespace-nowrap pb-4">
             <div class="inline-flex space-x-6">
                 <div th:each="similar : ${similarByRegion}"
                      class="bg-location-similar rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 w-64 flex-shrink-0">
                     <a th:href="@{/locations/{id}(id=${similar.id})}">
-                        <img th:src="${similar.imageUrl}" alt="Similar Location Image" class="w-full h-48 object-cover">
+                        <img th:src="${similar.imageUrl}" th:alt="${similar.name + ' Image'}"
+                             class="w-full h-48 object-cover">
                         <div class="p-4">
                             <h3 th:text="${similar.name}" class="text-lg font-semibold mb-2">Similar Location Name</h3>
                         </div>
@@ -74,7 +76,8 @@
 
 <footer class="bg-gray-800 text-white py-4 mt-12">
     <div class="container mx-auto text-center">
-        <p>&copy; 2024 Travel To Georgia. All rights reserved.</p>
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> Travel To Georgia. All rights reserved.
+        </p>
     </div>
 </footer>
 </body>
