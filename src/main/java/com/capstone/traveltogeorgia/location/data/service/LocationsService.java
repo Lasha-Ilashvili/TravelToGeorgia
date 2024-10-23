@@ -1,10 +1,10 @@
-package com.capstone.traveltogeorgia.data.service;
+package com.capstone.traveltogeorgia.location.data.service;
 
-import com.capstone.traveltogeorgia.data.Repository.LocationsRepository;
-import com.capstone.traveltogeorgia.data.model.LocationEntity;
-import com.capstone.traveltogeorgia.domain.model.Location;
-import com.capstone.traveltogeorgia.domain.model.Region;
-import com.capstone.traveltogeorgia.domain.model.Season;
+import com.capstone.traveltogeorgia.location.data.Repository.LocationsRepository;
+import com.capstone.traveltogeorgia.location.data.model.LocationEntity;
+import com.capstone.traveltogeorgia.location.domain.model.Location;
+import com.capstone.traveltogeorgia.location.domain.model.Region;
+import com.capstone.traveltogeorgia.location.domain.model.Season;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

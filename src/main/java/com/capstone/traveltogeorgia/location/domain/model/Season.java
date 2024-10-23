@@ -1,4 +1,4 @@
-package com.capstone.traveltogeorgia.domain.model;
+package com.capstone.traveltogeorgia.location.domain.model;
 
 public enum Season {
     SUMMER("Summer"),

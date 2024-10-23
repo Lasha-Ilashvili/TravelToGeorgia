@@ -1,7 +1,7 @@
-package com.capstone.traveltogeorgia.data.model;
+package com.capstone.traveltogeorgia.location.data.model;
 
-import com.capstone.traveltogeorgia.domain.model.Region;
-import com.capstone.traveltogeorgia.domain.model.Season;
+import com.capstone.traveltogeorgia.location.domain.model.Region;
+import com.capstone.traveltogeorgia.location.domain.model.Season;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -102,7 +102,7 @@ public class LocationEntity {
                 && Objects.equals(imageUrl, locationEntity.imageUrl)
                 && season == locationEntity.season
                 && region == locationEntity.region;
-     }
+    }
 
     @Override
     public int hashCode() {

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<header class="bg-blue-600 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+        <a th:href="@{/locations}"
+           class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                      clip-rule="evenodd"/>
+            </svg>
+            Back to Locations
+        </a>
+    </div>
+</header>
+
+<main class="container mx-auto mt-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-semibold mb-4">User List</h2>
+        <table class="min-w-full bg-white border">
+            <thead>
+            <tr>
+                <th class="py-2 px-4 border">Username</th>
+                <th class="py-2 px-4 border">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td class="py-2 px-4 border" th:text="${user.username}"></td>
+                <td class="py-2 px-4 border" th:text="${user.email}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="bg-gray-800 text-white py-4 mt-12">
+    <div class="container mx-auto text-center">
+        <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> Travel To Georgia. All rights reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>

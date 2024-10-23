@@ -1,11 +1,11 @@
 package com.capstone.traveltogeorgia;
 
-import com.capstone.traveltogeorgia.data.Repository.LocationsRepository;
-import com.capstone.traveltogeorgia.data.model.LocationEntity;
-import com.capstone.traveltogeorgia.data.service.LocationsService;
-import com.capstone.traveltogeorgia.domain.model.Location;
-import com.capstone.traveltogeorgia.domain.model.Region;
-import com.capstone.traveltogeorgia.domain.model.Season;
+import com.capstone.traveltogeorgia.location.data.Repository.LocationsRepository;
+import com.capstone.traveltogeorgia.location.data.model.LocationEntity;
+import com.capstone.traveltogeorgia.location.data.service.LocationsService;
+import com.capstone.traveltogeorgia.location.domain.model.Location;
+import com.capstone.traveltogeorgia.location.domain.model.Region;
+import com.capstone.traveltogeorgia.location.domain.model.Season;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

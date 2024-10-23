@@ -1,8 +1,8 @@
-package com.capstone.traveltogeorgia.data.Repository;
+package com.capstone.traveltogeorgia.location.data.Repository;
 
-import com.capstone.traveltogeorgia.data.model.LocationEntity;
-import com.capstone.traveltogeorgia.domain.model.Region;
-import com.capstone.traveltogeorgia.domain.model.Season;
+import com.capstone.traveltogeorgia.location.data.model.LocationEntity;
+import com.capstone.traveltogeorgia.location.domain.model.Region;
+import com.capstone.traveltogeorgia.location.domain.model.Season;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

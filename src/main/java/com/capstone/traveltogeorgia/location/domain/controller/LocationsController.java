@@ -1,10 +1,10 @@
-package com.capstone.traveltogeorgia.domain.controller;
+package com.capstone.traveltogeorgia.location.domain.controller;
 
 
-import com.capstone.traveltogeorgia.data.service.LocationsService;
-import com.capstone.traveltogeorgia.domain.model.Location;
-import com.capstone.traveltogeorgia.domain.model.Region;
-import com.capstone.traveltogeorgia.domain.model.Season;
+import com.capstone.traveltogeorgia.location.data.service.LocationsService;
+import com.capstone.traveltogeorgia.location.domain.model.Location;
+import com.capstone.traveltogeorgia.location.domain.model.Region;
+import com.capstone.traveltogeorgia.location.domain.model.Season;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
+
+import static com.capstone.traveltogeorgia.utils.Utils.getEnum;
 
 @Controller
 @RequestMapping("/locations")
@@ -79,12 +81,5 @@ public class LocationsController {
     private void addCommonAttributes(Model model) {
         model.addAttribute("allRegions", locationsService.getAllRegions());
         model.addAttribute("allSeasons", Arrays.copyOf(Season.values(), Season.values().length - 1));
-    }
-
-    private static <T extends Enum<T>> T getEnum(Class<T> enumClass, String name) {
-        for (T e : enumClass.getEnumConstants()) {
-            if (e.toString().toUpperCase().contains(name.toUpperCase())) return e;
-        }
-        return null;
     }
 }
