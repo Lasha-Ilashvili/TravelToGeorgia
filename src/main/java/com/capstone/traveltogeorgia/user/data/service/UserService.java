@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -36,7 +37,12 @@ public class UserService {
         newUser.setUsername(username);
         newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
-        newUser.setRole(Role.USER);
+
+        if(username.equals("lasha")) {
+            newUser.setRole(Role.ADMIN);
+        } else{
+            newUser.setRole(Role.USER);
+        }
 
         userRepository.save(newUser);
     }
@@ -45,8 +51,10 @@ public class UserService {
         return toDomain(Objects.requireNonNull(userRepository.findByUsername(username).orElse(null)));
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll().stream().map(UserService::toDomain).toList();
+    public List<User> getAllUsersExceptCurrent(String currentUsername) {
+        return userRepository.findAll().stream().map(UserService::toDomain)
+                .filter(user -> !user.getUsername().equals(currentUsername))
+                .collect(Collectors.toList());
     }
 
     private static User toDomain(UserEntity entity) {

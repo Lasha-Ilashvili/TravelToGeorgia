@@ -1,5 +1,6 @@
 package com.capstone.traveltogeorgia.user.auth.data.security;
 
+import com.capstone.traveltogeorgia.user.domain.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers("/admin").hasAuthority(Role.ADMIN.toString())
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -43,7 +45,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
-                .userDetailsService(customUserDetailsService);  ;
+                .userDetailsService(customUserDetailsService);
 
         return http.build();
     }

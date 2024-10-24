@@ -23,9 +23,7 @@ public class UserController {
     @GetMapping("/profile")
     public String showUserProfile(Model model, Principal principal) {
         if (principal != null) {
-            String username = principal.getName();
-            System.out.println("Username" + username);
-            User user = userService.findByUsername(username);
+            User user = userService.findByUsername(principal.getName());
 
             if (user.getRole() == Role.ADMIN) {
                 return "redirect:/admin";
@@ -39,9 +37,8 @@ public class UserController {
     }
 
     @GetMapping("/admin")
-    public String adminDashboard(Model model) {
-        System.out.println("INSIDE ADMIN");
-        model.addAttribute("users", userService.getAllUsers());
+    public String adminDashboard(Model model, Principal principal) {
+        model.addAttribute("users", userService.getAllUsersExceptCurrent(principal.getName()));
 
         return "admin_dashboard";
     }

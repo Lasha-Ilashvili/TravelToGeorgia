@@ -1,14 +1,24 @@
-FROM maven:3.6.3-openjdk-11-slim as BUILDER
-ARG VERSION=0.0.1-SNAPSHOT
-WORKDIR /build/
-COPY pom.xml /build/
-COPY src /build/src/
+# Stage 1: Build the application
+FROM maven:3.8.5-openjdk-17 AS BUILDER
 
-RUN mvn clean package
-COPY target/traveltogeorgia-${VERSION}.jar target/application.jar
+# Set the working directory
+WORKDIR /app
 
-FROM openjdk:11.0.8-jre-slim
-WORKDIR /app/
+# Copy the Maven project files
+COPY pom.xml .
+COPY src ./src
 
-COPY --from=BUILDER /build/target/application.jar /app/
-CMD java -jar /app/application.jar
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application
+FROM openjdk:17
+
+# Set the working directory for the runtime
+WORKDIR /app
+
+# Copy the jar file from the build stage
+COPY --from=BUILDER /app/target/*.jar app.jar
+
+# Command to run the application
+CMD ["java", "-jar", "app.jar"]

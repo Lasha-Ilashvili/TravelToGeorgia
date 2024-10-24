@@ -28,9 +28,8 @@
         <h2 class="text-2xl font-semibold mb-4">Profile Information</h2>
         <p><strong>Username:</strong> <span th:text="${username}"></span></p>
         <p><strong>Email:</strong> <span th:text="${email}"></span></p>
-        <form th:action="@{/logout}" method="post" class="mt-6">
-            <button type="submit"
-                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">
+        <form th:action="@{/logout}" method="post" class="mt-6 flex justify-center">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Logout
             </button>
         </form>
