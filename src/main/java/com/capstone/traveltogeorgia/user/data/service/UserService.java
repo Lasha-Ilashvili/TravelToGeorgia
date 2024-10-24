@@ -37,12 +37,7 @@ public class UserService {
         newUser.setUsername(username);
         newUser.setEmail(email);
         newUser.setPassword(passwordEncoder.encode(password));
-
-        if(username.equals("lasha")) {
-            newUser.setRole(Role.ADMIN);
-        } else{
-            newUser.setRole(Role.USER);
-        }
+        newUser.setRole(Role.USER);
 
         userRepository.save(newUser);
     }
